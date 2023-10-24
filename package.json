@@ -10,6 +10,14 @@
     "format:fix": "prettier --write .",
     "preview": "vite preview"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": "prettier --write"
+  },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
