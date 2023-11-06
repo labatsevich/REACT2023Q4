@@ -1,15 +1,24 @@
-import { Component, ReactNode } from 'react';
+import { FC } from 'react';
 import './App.css';
-import { Searchbar } from './components/Searchbar/Searchbar';
+import Home from './pages/Home';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
+import Details from './components/Details/Details';
 
-class App extends Component {
-  constructor(props: {}) {
-    super(props);
-  }
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Home />}>
+      <Route path="details/:id" element={<Details />} />
+    </Route>
+  )
+);
 
-  render(): ReactNode {
-    return <Searchbar />;
-  }
-}
+const App: FC = () => {
+  return <RouterProvider router={router} />;
+};
 
 export default App;
