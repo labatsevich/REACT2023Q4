@@ -10,25 +10,26 @@ import { LimitPicker } from '../components/LimitPicker/LimitPicker';
 import { useAppContext } from '../context/AppContextProvider';
 
 const Home: FC = () => {
-  const { term, data, setData } = useAppContext();
+  const { term, data, setData, currentPage, setCurrentPage } = useAppContext();
 
   const [loaded, setLoaded] = useState<boolean>(false);
   const [searchParams, setsearchParams] = useSearchParams({
     q: term ?? '',
   });
   const [pager, setPager] = useState<PaginationType | undefined>(undefined);
-  const [currentPage, setCurrenPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(25);
+  const [limit, setLimit] = useState<number>(
+    searchParams.has('limit') ? +searchParams.get('limit')! : 25
+  );
 
   const nextPage = () => {
-    setCurrenPage(currentPage + 1);
+    setCurrentPage(currentPage + 1);
     searchParams.set('page', '' + (currentPage + 1));
     setsearchParams(searchParams);
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrenPage(currentPage - 1);
+      setCurrentPage(currentPage - 1);
       searchParams.set('page', '' + (currentPage - 1));
       setsearchParams(searchParams);
     }
@@ -43,7 +44,7 @@ const Home: FC = () => {
       );
       setData(data);
       setPager(pagination);
-      setCurrenPage(pagination.current_page ?? 1);
+      setCurrentPage(pagination.current_page ?? 1);
       setLoaded(true);
     }, 1000);
   }, [currentPage, limit]);
@@ -54,7 +55,7 @@ const Home: FC = () => {
     if (query) params.q = query;
     params.limit = '' + limit;
 
-    setCurrenPage(1);
+    setCurrentPage(1);
     setLoaded(false);
     setTimeout(
       async () => {
@@ -85,7 +86,7 @@ const Home: FC = () => {
           <Loader />
         ) : (
           <>
-            {pager && (
+            {pager ? (
               <Pagination
                 prevPage={prevPage}
                 nextPage={nextPage}
@@ -93,8 +94,10 @@ const Home: FC = () => {
                 current={pager.current_page ?? 1}
                 total={pager.last_visible_page ?? 1}
               />
+            ) : (
+              ''
             )}
-            {data && <Pane items={data} />}
+            {data.length ? <Pane /> : <div>Nothing found</div>}
           </>
         )}
       </section>

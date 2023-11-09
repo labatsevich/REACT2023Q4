@@ -21,7 +21,7 @@ const router = createBrowserRouter(
 const App: FC = () => {
   return (
     <AppContextProvider>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </AppContextProvider>
   );
 };

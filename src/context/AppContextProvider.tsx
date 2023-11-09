@@ -6,6 +6,8 @@ type ContextType = {
   setTerm: React.Dispatch<React.SetStateAction<string>>;
   data: Array<IAnime>;
   setData: React.Dispatch<React.SetStateAction<Array<IAnime>>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const initContext: ContextType = {
@@ -13,6 +15,8 @@ const initContext: ContextType = {
   setTerm: () => {},
   data: [],
   setData: () => {},
+  currentPage: 1,
+  setCurrentPage: () => {},
 };
 
 export const AppContext = createContext<ContextType>(initContext);
@@ -20,12 +24,15 @@ export const AppContext = createContext<ContextType>(initContext);
 export function AppContextProvider({ children }: { children: ReactNode }) {
   const [term, setTerm] = useState<string>('');
   const [data, setData] = useState<Array<IAnime>>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const value: ContextType = {
     term,
     setTerm,
     data,
     setData,
+    currentPage,
+    setCurrentPage,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
