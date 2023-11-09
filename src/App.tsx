@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import Details from './components/Details/Details';
+import { AppContextProvider } from './context/AppContextProvider';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +19,11 @@ const router = createBrowserRouter(
 );
 
 const App: FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <AppContextProvider>
+      <RouterProvider router={router} />;
+    </AppContextProvider>
+  );
 };
 
 export default App;

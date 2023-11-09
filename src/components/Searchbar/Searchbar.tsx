@@ -1,15 +1,14 @@
-import { ChangeEvent, FormEvent, useEffect, useState, FC } from 'react';
+import { ChangeEvent, FormEvent, useEffect, FC } from 'react';
 import './searchbar.scss';
 import { useSearchParams } from 'react-router-dom';
+import { useAppContext } from '../../context/AppContextProvider';
 
 export interface SearchProps {
   onChangeQuery: (query: string) => void;
 }
 
 const Searchbar: FC<SearchProps> = ({ onChangeQuery }: SearchProps) => {
-  const [term, setTerm] = useState<string>(
-    localStorage.getItem('searchTerm') ?? ''
-  );
+  const { term, setTerm } = useAppContext();
 
   const [searchParams, setsearchParams] = useSearchParams({});
 

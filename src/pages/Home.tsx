@@ -1,18 +1,20 @@
 import { FC, useEffect, useState } from 'react';
 import Searchbar from '../components/Searchbar/Searchbar';
 import Pane from '../components/Pane/Pane';
-import { IAnime, PaginationType, URLParams } from '../types';
+import { PaginationType, URLParams } from '../types';
 import Loader from '../components/Loader/Loader';
 import { getAnime } from '../api/characters';
 import { Pagination } from '../components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { LimitPicker } from '../components/LimitPicker/LimitPicker';
+import { useAppContext } from '../context/AppContextProvider';
 
 const Home: FC = () => {
-  const [data, setData] = useState<IAnime[]>([]);
+  const { term, data, setData } = useAppContext();
+
   const [loaded, setLoaded] = useState<boolean>(false);
   const [searchParams, setsearchParams] = useSearchParams({
-    q: localStorage.getItem('searchTerm') ?? '',
+    q: term ?? '',
   });
   const [pager, setPager] = useState<PaginationType | undefined>(undefined);
   const [currentPage, setCurrenPage] = useState<number>(1);
