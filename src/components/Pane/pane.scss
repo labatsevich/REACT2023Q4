@@ -3,6 +3,8 @@
   grid-template-columns: 4fr auto;
   position: relative;
   padding-top: 2rem;
+  min-height: 100vh;
+  height: 100%;
 }
 .cards {
   display: grid;

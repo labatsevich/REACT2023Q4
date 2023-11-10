@@ -55,6 +55,31 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.message {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.message.warning {
+  color: #777;
+}
+
+.message .code {
+  font-size: 5rem;
+  font-weight: 700;
+  color: orangered;
+}
+
+.message .text {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.message a {
+  padding-top: 2rem;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

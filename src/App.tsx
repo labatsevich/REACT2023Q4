@@ -9,12 +9,16 @@ import {
 } from 'react-router-dom';
 import Details from './components/Details/Details';
 import { AppContextProvider } from './context/AppContextProvider';
+import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Home />}>
-      <Route path="details/:id" element={<Details />} />
-    </Route>
+    <>
+      <Route path="/" element={<Home />}>
+        <Route path="details/:id" element={<Details />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </>
   )
 );
 
