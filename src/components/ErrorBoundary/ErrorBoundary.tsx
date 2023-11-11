@@ -35,7 +35,7 @@ export default class ErrorBoundary extends Component<
         <div className="error">
           <h3>We are sorry... something went wrong</h3>
           <p>We cannot process your request at this moment.</p>
-          <button>Refresh</button>
+          <button onClick={() => window.location.reload()}>Refresh</button>
         </div>
       );
 
