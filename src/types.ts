@@ -19,13 +19,15 @@ type Images = {
 export interface IAnime {
   mal_id: number;
   title: string;
+  url: string;
+  approved: boolean;
   images: {
     jpg: Images;
     webp: Images;
   };
   genre: string;
   synopsis: string;
-  year: number;
+  year: number | null;
 }
 
 export interface IAnimeResponse {

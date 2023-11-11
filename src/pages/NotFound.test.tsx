@@ -6,7 +6,7 @@ import NotFound from './NotFound';
 
 test('Tests for the 404 Page component', () => {
   render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={['/bad-url']}>
       <NotFound />
     </MemoryRouter>
   );
