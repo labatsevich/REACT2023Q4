@@ -36,7 +36,6 @@ const Home: FC = () => {
   };
 
   useEffect(() => {
-    setLoaded(false);
     setTimeout(async () => {
       const { data, pagination } = await getAnime(
         'https://api.jikan.moe/v4/anime',
@@ -97,7 +96,7 @@ const Home: FC = () => {
             ) : (
               ''
             )}
-            {data.length ? <Pane /> : <div>Nothing found</div>}
+            {data && <Pane />}
           </>
         )}
       </section>

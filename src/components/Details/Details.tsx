@@ -3,14 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getDetails } from '../../api/characters';
 import { IAnime } from '../../types';
 import Loader from '../Loader/Loader';
+import { useAppContext } from '../../context/AppContextProvider';
 
 const Details: FC = () => {
-  const [loaded, setLoaded] = useState<boolean>(false);
+  const { loaded, setLoaded } = useAppContext();
   const { id } = useParams();
   const [details, setDetails] = useState<IAnime | undefined>();
   const navigate = useNavigate();
 
   const close = (): void => {
+    setLoaded(false);
     navigate(-1);
   };
 

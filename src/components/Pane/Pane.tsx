@@ -5,6 +5,7 @@ import { useAppContext } from '../../context/AppContextProvider';
 
 const Pane: FC = () => {
   const { data } = useAppContext();
+  if (!data.length) return <div>Nothing found</div>;
   return (
     <>
       <div className="cards" onClick={close}>
