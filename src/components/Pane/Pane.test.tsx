@@ -26,7 +26,7 @@ describe('Pane component', () => {
       </MemoryRouter>
     );
     const cards = screen.getAllByRole('img');
-    expect(cards.length).toEqual(2);
+    expect(cards.length).toEqual(10);
   });
 
   test('Check that an appropriate message is displayed if no cards are present', () => {

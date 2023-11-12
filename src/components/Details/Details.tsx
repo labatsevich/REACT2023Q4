@@ -17,47 +17,40 @@ const Details: FC = () => {
   };
 
   useEffect(() => {
-    setTimeout(async () => {
-      (async () => {
-        const data = await getDetails('https://api.jikan.moe/v4/anime', id);
+    (async () => {
+      const data = await getDetails('https://api.jikan.moe/v4/anime', id);
 
-        if (data) {
-          setDetails(data as IAnime);
-          setLoaded(true);
-        }
-      })();
-    }, 500);
+      if (data) {
+        setDetails(data as IAnime);
+        setLoaded(true);
+      }
+    })();
   }, [id]);
 
-  return (
-    <>
-      <article className="details">
-        {!loaded ? (
-          <Loader />
-        ) : (
-          details && (
-            <>
-              <span className="close" onClick={close}>
-                &times;
-              </span>
-              <img
-                src={details.images.webp.image_url}
-                alt={details.title}
-                width={320}
-              />
-              <span>{details.title}</span>
-              <span>{details.genre}</span>
-              <span>{details.year}</span>
-              <p>
-                <small>{details.synopsis}</small>
-              </p>
-            </>
-          )
-        )}
-      </article>
-      <div className="details__overlay" onClick={close}></div>
-    </>
-  );
+  if (!loaded) return <Loader />;
+  if (details) {
+    return (
+      <>
+        <article className="details">
+          <span className="close" onClick={close} title="close">
+            &times;
+          </span>
+          <img
+            src={details.images.jpg.image_url}
+            alt={details.title}
+            width={320}
+          />
+          <span>{details.title}</span>
+          <span>{details.genre}</span>
+          <span>{details.year}</span>
+          <p>
+            <small>{details.synopsis}</small>
+          </p>
+        </article>
+        <div className="details__overlay" onClick={close}></div>
+      </>
+    );
+  }
 };
 
 export default Details;
