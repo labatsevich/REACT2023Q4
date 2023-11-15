@@ -1,14 +1,17 @@
-import { ChangeEvent, FormEvent, useEffect, FC } from 'react';
+import { ChangeEvent, FormEvent, useEffect, FC, useState } from 'react';
 import './searchbar.scss';
 import { useSearchParams } from 'react-router-dom';
-import { useAppContext } from '../../context/AppContextProvider';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { updateTerm } from '../../store/reducers/appSlice';
 
 export interface SearchProps {
   onChangeQuery: (query: string) => void;
 }
 
-const Searchbar: FC<SearchProps> = ({ onChangeQuery }: SearchProps) => {
-  const { term, setTerm } = useAppContext();
+const Searchbar: FC = () => {
+  const { term } = useAppSelector((state) => state.app);
+  const dispatch = useAppDispatch();
+  const [search, setSearch] = useState<string>(term);
 
   const [searchParams, setsearchParams] = useSearchParams({});
 
@@ -20,7 +23,7 @@ const Searchbar: FC<SearchProps> = ({ onChangeQuery }: SearchProps) => {
     if (term) params.q = term;
     if (searchParams.has('page')) searchParams.delete('page');
     setsearchParams(params);
-    onChangeQuery(term);
+    dispatch(updateTerm(search));
   };
 
   useEffect(() => {
@@ -29,13 +32,13 @@ const Searchbar: FC<SearchProps> = ({ onChangeQuery }: SearchProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
-    setTerm(value);
+    setSearch(value);
   };
 
   return (
     <form method="GET" onSubmit={handleSubmit}>
       <div className="search">
-        <input type="search" value={term} onChange={handleChange} name="q" />
+        <input type="search" value={search} onChange={handleChange} name="q" />
         <button type="submit">Search</button>
       </div>
     </form>

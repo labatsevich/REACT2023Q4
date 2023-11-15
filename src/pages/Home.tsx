@@ -1,102 +1,46 @@
 import { FC, useEffect, useState } from 'react';
 import Searchbar from '../components/Searchbar/Searchbar';
 import Pane from '../components/Pane/Pane';
-import { PaginationType, URLParams } from '../types';
+import { PaginationType } from '../types';
 import Loader from '../components/Loader/Loader';
-import { getAnime } from '../api/characters';
 import { Pagination } from '../components/Pagination/Pagination';
-import { useSearchParams } from 'react-router-dom';
 import { LimitPicker } from '../components/LimitPicker/LimitPicker';
-import { useAppContext } from '../context/AppContextProvider';
+import { useAppSelector } from '../hooks';
+import { useAnimeListQuery } from '../api/animeApi';
 
 const Home: FC = () => {
-  const { term, data, setData, currentPage, setCurrentPage } = useAppContext();
+  const { term, limit, currentPage } = useAppSelector((state) => state.app);
 
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const [searchParams, setsearchParams] = useSearchParams({
-    q: term ?? '',
+  const { data, isLoading, isFetching } = useAnimeListQuery({
+    q: term,
+    limit,
+    page: currentPage,
   });
-  const [pager, setPager] = useState<PaginationType | undefined>(undefined);
-  const [limit, setLimit] = useState<number>(
-    searchParams.has('limit') ? +searchParams.get('limit')! : 25
-  );
-
-  const nextPage = () => {
-    setCurrentPage(currentPage + 1);
-    searchParams.set('page', '' + (currentPage + 1));
-    setsearchParams(searchParams);
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      searchParams.set('page', '' + (currentPage - 1));
-      setsearchParams(searchParams);
-    }
-  };
+  const [pager, setPager] = useState<PaginationType | undefined>();
 
   useEffect(() => {
-    setTimeout(async () => {
-      const { data, pagination } = await getAnime(
-        'https://api.jikan.moe/v4/anime',
-        searchParams
-      );
-      setData(data);
-      setPager(pagination);
-      setCurrentPage(pagination.current_page ?? 1);
-      setLoaded(true);
-    }, 1000);
-  }, [currentPage, limit]);
-
-  const searchData = (query: string) => {
-    const params: URLParams = {};
-
-    if (query) params.q = query;
-    params.limit = '' + limit;
-
-    setCurrentPage(1);
-    setLoaded(false);
-    setTimeout(
-      async () => {
-        const { data, pagination } = await getAnime(
-          'https://api.jikan.moe/v4/anime',
-          params
-        );
-        setData(data);
-        setPager(pagination);
-        searchParams.set('page', pagination.current_page?.toString() ?? '1');
-        setLoaded(true);
-      },
-      1000,
-      query
-    );
-  };
+    setPager(data?.pagination);
+  }, [data]);
 
   return (
     <>
-      <Searchbar onChangeQuery={searchData} />
-      <LimitPicker
-        setsearchParams={setsearchParams}
-        setLimit={setLimit}
-        limit={limit}
-      />
+      <Searchbar />
+      <LimitPicker />
       <section className="characters">
-        {!loaded ? (
+        {isLoading && isFetching ? (
           <Loader />
         ) : (
           <>
-            {pager ? (
+            {data?.pagination ? (
               <Pagination
-                prevPage={prevPage}
-                nextPage={nextPage}
-                hasNext={pager.has_next_page}
-                current={pager.current_page ?? 1}
-                total={pager.last_visible_page ?? 1}
+                hasNext={pager?.has_next_page ?? false}
+                current={currentPage}
+                total={pager?.last_visible_page ?? 1}
               />
             ) : (
               ''
             )}
-            {data && <Pane />}
+            <Pane />
           </>
         )}
       </section>

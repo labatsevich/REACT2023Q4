@@ -8,9 +8,10 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import Details from './components/Details/Details';
-import { AppContextProvider } from './context/AppContextProvider';
 import NotFound from './pages/NotFound';
 import Layout from './pages/Layout';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,9 +26,9 @@ const router = createBrowserRouter(
 
 const App: FC = () => {
   return (
-    <AppContextProvider>
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </AppContextProvider>
+    </Provider>
   );
 };
 
