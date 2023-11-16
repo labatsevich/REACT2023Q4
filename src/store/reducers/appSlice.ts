@@ -13,7 +13,7 @@ const search = new URLSearchParams(window.location.search);
 const _limit = search.has('limit') ? search.get('limit') : null;
 const _currentPage = search.has('page') ? search.get('page') : null;
 
-const initialState: AppState = {
+export const initialState: AppState = {
   term: localStorage.getItem('searchTerm') ?? '',
   limit: _limit ? +_limit : 25,
   currentPage: _currentPage ? +_currentPage : 1,
