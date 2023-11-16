@@ -5,13 +5,16 @@ import { PaginationType } from '../types';
 import Loader from '../components/Loader/Loader';
 import { Pagination } from '../components/Pagination/Pagination';
 import { LimitPicker } from '../components/LimitPicker/LimitPicker';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { useAnimeListQuery } from '../api/animeApi';
+import { setItems } from '../store/reducers/appSlice';
 
 const Home: FC = () => {
-  const { term, limit, currentPage } = useAppSelector((state) => state.app);
-
-  const { data, isLoading, isFetching } = useAnimeListQuery({
+  const { term, limit, currentPage, isLoading } = useAppSelector(
+    (state) => state.app
+  );
+  const dispatch = useAppDispatch();
+  const { data } = useAnimeListQuery({
     q: term,
     limit,
     page: currentPage,
@@ -19,7 +22,10 @@ const Home: FC = () => {
   const [pager, setPager] = useState<PaginationType | undefined>();
 
   useEffect(() => {
-    setPager(data?.pagination);
+    if (data) {
+      setPager(data.pagination);
+      dispatch(setItems(data.data));
+    }
   }, [data]);
 
   return (
@@ -27,7 +33,7 @@ const Home: FC = () => {
       <Searchbar />
       <LimitPicker />
       <section className="characters">
-        {isLoading && isFetching ? (
+        {isLoading ? (
           <Loader />
         ) : (
           <>
