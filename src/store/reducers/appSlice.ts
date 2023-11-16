@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IAnime } from '../../types';
 import { animeApi } from '../../api/animeApi';
 
 export interface AppState {
   term: string;
   limit: number;
   currentPage: number;
-  items: Array<IAnime>;
   isLoading: boolean;
   idDetailsLoading: boolean;
 }
@@ -19,7 +17,6 @@ const initialState: AppState = {
   term: localStorage.getItem('searchTerm') ?? '',
   limit: _limit ? +_limit : 25,
   currentPage: _currentPage ? +_currentPage : 1,
-  items: [],
   isLoading: false,
   idDetailsLoading: false,
 };
@@ -37,9 +34,6 @@ const appSlice = createSlice({
     },
     updatePage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
-    },
-    setItems: (state, action: PayloadAction<Array<IAnime>>) => {
-      state.items = action.payload;
     },
   },
   extraReducers(builder) {
@@ -67,7 +61,6 @@ const appSlice = createSlice({
   },
 });
 
-export const { updateTerm, updateLimit, updatePage, setItems } =
-  appSlice.actions;
+export const { updateTerm, updateLimit, updatePage } = appSlice.actions;
 
 export default appSlice.reducer;

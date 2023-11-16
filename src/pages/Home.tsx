@@ -5,15 +5,14 @@ import { PaginationType } from '../types';
 import Loader from '../components/Loader/Loader';
 import { Pagination } from '../components/Pagination/Pagination';
 import { LimitPicker } from '../components/LimitPicker/LimitPicker';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppSelector } from '../hooks';
 import { useAnimeListQuery } from '../api/animeApi';
-import { setItems } from '../store/reducers/appSlice';
 
 const Home: FC = () => {
   const { term, limit, currentPage, isLoading } = useAppSelector(
     (state) => state.app
   );
-  const dispatch = useAppDispatch();
+
   const { data } = useAnimeListQuery({
     q: term,
     limit,
@@ -24,7 +23,6 @@ const Home: FC = () => {
   useEffect(() => {
     if (data) {
       setPager(data.pagination);
-      dispatch(setItems(data.data));
     }
   }, [data]);
 
