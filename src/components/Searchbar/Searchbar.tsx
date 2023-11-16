@@ -2,17 +2,16 @@ import { ChangeEvent, FormEvent, useEffect, FC, useState } from 'react';
 import './searchbar.scss';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { updateTerm } from '../../store/reducers/appSlice';
+import { updatePage, updateTerm } from '../../store/reducers/appSlice';
 
 export interface SearchProps {
   onChangeQuery: (query: string) => void;
 }
 
 const Searchbar: FC = () => {
-  const { term } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
+  const { term } = useAppSelector((state) => state.app);
   const [search, setSearch] = useState<string>(term);
-
   const [searchParams, setsearchParams] = useSearchParams({});
 
   const handleSubmit = (
@@ -20,15 +19,16 @@ const Searchbar: FC = () => {
   ): void => {
     e.preventDefault();
     const params: Record<string, string> = {};
-    if (term) params.q = term;
+    if (search) params.q = search;
     if (searchParams.has('page')) searchParams.delete('page');
+    dispatch(updateTerm(search ?? ''));
+    dispatch(updatePage(1));
     setsearchParams(params);
-    dispatch(updateTerm(search));
   };
 
   useEffect(() => {
-    localStorage.setItem('searchTerm', term);
-  }, [term]);
+    localStorage.setItem('searchTerm', search);
+  }, [search]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
