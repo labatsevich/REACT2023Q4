@@ -1,17 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IAnime } from '../../types';
+import { animeApi } from '../../api/animeApi';
 
 export interface AppState {
   term: string;
   limit: number;
   currentPage: number;
-  viewMode: boolean;
+  items: Array<IAnime>;
+  isLoading: boolean;
+  idDetailsLoading: boolean;
 }
+
+const search = new URLSearchParams(window.location.search);
+const _limit = search.has('limit') ? search.get('limit') : null;
+const _currentPage = search.has('page') ? search.get('page') : null;
 
 const initialState: AppState = {
   term: localStorage.getItem('searchTerm') ?? '',
-  limit: 25,
-  currentPage: 1,
-  viewMode: false,
+  limit: _limit ? +_limit : 25,
+  currentPage: _currentPage ? +_currentPage : 1,
+  items: [],
+  isLoading: false,
+  idDetailsLoading: false,
 };
 
 const appSlice = createSlice({
@@ -28,9 +38,36 @@ const appSlice = createSlice({
     updatePage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
+    setItems: (state, action: PayloadAction<Array<IAnime>>) => {
+      state.items = action.payload;
+    },
+  },
+  extraReducers(builder) {
+    builder.addMatcher(animeApi.endpoints.animeList.matchPending, (state) => {
+      state.isLoading = true;
+    }),
+      builder.addMatcher(
+        animeApi.endpoints.animeList.matchFulfilled,
+        (state) => {
+          state.isLoading = false;
+        }
+      ),
+      builder.addMatcher(
+        animeApi.endpoints.getDetails.matchPending,
+        (state) => {
+          state.idDetailsLoading = true;
+        }
+      ),
+      builder.addMatcher(
+        animeApi.endpoints.getDetails.matchFulfilled,
+        (state) => {
+          state.idDetailsLoading = false;
+        }
+      );
   },
 });
 
-export const { updateTerm, updateLimit, updatePage } = appSlice.actions;
+export const { updateTerm, updateLimit, updatePage, setItems } =
+  appSlice.actions;
 
 export default appSlice.reducer;
