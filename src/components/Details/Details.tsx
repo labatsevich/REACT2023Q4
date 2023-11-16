@@ -2,17 +2,19 @@ import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import { useGetDetailsQuery } from '../../api/animeApi';
+import { useAppSelector } from '../../hooks';
 
 const Details: FC = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetDetailsQuery(+id!);
+  const { idDetailsLoading } = useAppSelector((state) => state.app);
+  const { data } = useGetDetailsQuery(+id!);
   const navigate = useNavigate();
 
   const close = (): void => {
     navigate(-1);
   };
 
-  if (isLoading) return <Loader />;
+  if (idDetailsLoading) return <Loader />;
   if (data) {
     return (
       <>
