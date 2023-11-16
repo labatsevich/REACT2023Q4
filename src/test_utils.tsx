@@ -19,6 +19,11 @@ export function renderWithProviders(
   {
     store = configureStore({
       reducer: { app: appReducer, [animeApi.reducerPath]: animeApi.reducer },
+      middleware(getDefaultMiddleware) {
+        return getDefaultMiddleware({ immutableCheck: true }).concat(
+          animeApi.middleware
+        );
+      },
     }),
     ...renderOptions
   }: ExtendedRenderOptions = {}
