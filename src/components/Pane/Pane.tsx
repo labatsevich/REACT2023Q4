@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import './pane.scss';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import Card from '../Card/Card';
 
 const Pane: FC = () => {
   const { items } = useAppSelector((state) => state.app);
@@ -12,12 +13,7 @@ const Pane: FC = () => {
     <>
       <div className="cards" onClick={close}>
         {items.map((item) => (
-          <Link to={`details/${item.mal_id}`} key={item.mal_id}>
-            <div className="cards__item">
-              <img src={item.images.webp.image_url} alt={item.title} />
-              <p>{item.title}</p>
-            </div>
-          </Link>
+          <Card {...item} key={item.mal_id} />
         ))}
       </div>
       <Outlet />
