@@ -8,7 +8,9 @@ const store = configureStore({
     [animeApi.reducerPath]: animeApi.reducer,
   },
   middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(animeApi.middleware);
+    return getDefaultMiddleware({ immutableCheck: true }).concat(
+      animeApi.middleware
+    );
   },
 });
 
