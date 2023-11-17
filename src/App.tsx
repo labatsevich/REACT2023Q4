@@ -11,7 +11,7 @@ import Details from './components/Details/Details';
 import NotFound from './pages/NotFound';
 import Layout from './pages/Layout';
 import { Provider } from 'react-redux';
-import store from './store';
+import { setupStore } from './store';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +26,7 @@ const router = createBrowserRouter(
 
 const App: FC = () => {
   return (
-    <Provider store={store}>
+    <Provider store={setupStore()}>
       <RouterProvider router={router} />
     </Provider>
   );

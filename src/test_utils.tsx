@@ -1,13 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
 import type { PreloadedState } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import type { AppStore, RootState } from './store';
-import appReducer from './store/reducers/appSlice';
-import { animeApi } from './api/animeApi';
+import { setupStore, type AppStore, type RootState } from './store';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>;
@@ -17,14 +14,8 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 export function renderWithProviders(
   ui: React.ReactElement,
   {
-    store = configureStore({
-      reducer: { app: appReducer, [animeApi.reducerPath]: animeApi.reducer },
-      middleware(getDefaultMiddleware) {
-        return getDefaultMiddleware({ immutableCheck: true }).concat(
-          animeApi.middleware
-        );
-      },
-    }),
+    preloadedState = {},
+    store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
