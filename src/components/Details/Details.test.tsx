@@ -7,8 +7,8 @@ import { server } from '../../mocks/server';
 import { items } from '../../mocks/data';
 
 describe('Tests for the Detailed Card component', async () => {
-  server.listen();
   test('Check that a loading indicator is displayed while fetching data', async () => {
+    server.listen();
     renderWithProviders(
       <MemoryRouter initialEntries={['/details/1']}>
         <Routes>

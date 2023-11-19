@@ -45,7 +45,7 @@ describe('Pane component', () => {
       )
     );
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(screen.getByText(/Nothing found/i)).toBeInTheDocument();
     });
     server.close();
