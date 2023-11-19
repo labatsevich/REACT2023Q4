@@ -2,13 +2,17 @@ import { describe, expect, test } from 'vitest';
 import { renderWithProviders } from '../../test_utils';
 import Searchbar from './Searchbar';
 import { screen } from '@testing-library/dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { userEvent } from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import { setupStore } from '../../store';
+import { updateTerm } from '../../store/reducers/appSlice';
+import Home from '../../pages/Home';
+
+const text = 'Cowboy';
 
 describe('Tests for the Search component', () => {
   test('Verify that clicking the Search button saves the entered value to the local storage', async () => {
-    const text = 'Cowboy';
     userEvent.setup();
 
     renderWithProviders(
@@ -27,16 +31,22 @@ describe('Tests for the Search component', () => {
   });
 
   test('Check that the component retrieves the value from the local storage upon mounting', async () => {
-    const term = localStorage.getItem('searchItem') ?? '';
-
+    const store = setupStore();
+    store.dispatch(updateTerm(text));
     renderWithProviders(
       <BrowserRouter>
-        <Searchbar />
-      </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>,
+      {
+        store,
+      }
     );
 
-    const search = screen.getByRole<HTMLInputElement>('searchbox');
+    const term = localStorage.getItem('searchTerm') ?? '';
+    const search = await screen.getByRole<HTMLInputElement>('searchbox');
 
-    expect(term).toBe(search.value);
+    await expect(term).toBe(search.value);
   });
 });
