@@ -15,6 +15,7 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "npx lint-staged",
       "pre-push": "npm run coverage"
     }
   },
