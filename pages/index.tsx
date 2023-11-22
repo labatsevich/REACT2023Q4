@@ -9,7 +9,7 @@ export const getServerSideProps:GetServerSideProps<{data:IAnimeResponse}> = wrap
 
 const { q, limit, page }  = context.query;
 
-const result  = await store.dispatch(animeList.initiate({ q: '', limit: 5, page : 1}));
+const result  = await store.dispatch(animeList.initiate({ q: q?.toString()  ?? '', limit: limit ? +limit: 25, page:  page ? +page : 1}));
 
 const data = await result.data as IAnimeResponse;
 

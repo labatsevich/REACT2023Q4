@@ -6,18 +6,18 @@ export const Searchbar: FC = () => {
 
   const router = useRouter();
   const { query } = router;
-  const [search, setSearch] = useState<string>((query.searcValue ?? '').toString());
+  const [search, setSearch] = useState<string>((query.q ?? '').toString());
 
   const handleSubmit = (
     e: FormEvent<HTMLFormElement | HTMLButtonElement>
   ): void => {
     e.preventDefault();
-
+    router.push({query: {q:search, limit:query.limit || 25,  page: query.page || 1}});
   };
 
   useEffect(() => {
     localStorage.setItem('searchTerm', search);
-  }, [search]);
+  }, [router]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
