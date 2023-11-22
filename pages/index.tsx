@@ -1,8 +1,26 @@
-import { Pane } from '@/components/Pane'
+import  Pane from '@/components/Pane'
+import { wrapper } from '@/store'
+import { animeList } from '@/store/services/animeApi'
+import { IAnimeResponse } from '@/types'
+import { GetServerSideProps, GetServerSidePropsResult, InferGetServerSidePropsType } from 'next'
 import Head from 'next/head'
 
+export const getServerSideProps:GetServerSideProps<{data:IAnimeResponse}> = wrapper.getServerSideProps((store) => async (context) => {
 
-export default function Home() {
+const { q, limit, page }  = context.query;
+
+const result  = await store.dispatch(animeList.initiate({ q: '', limit: 5, page : 1}));
+
+const data = await result.data as IAnimeResponse;
+
+
+return {
+  props: {data},
+}
+
+});
+
+export default function Home({data}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>      
     <Head>
@@ -11,7 +29,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Pane />
+      <Pane data = {...data.data} />
       </>
 
   )

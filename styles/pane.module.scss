@@ -1,0 +1,23 @@
+.characters {
+  display: grid;
+  grid-template-columns: 4fr auto;
+  position: relative;
+  padding-top: 2rem;
+  min-height: 100vh;
+  height: 100%;
+}
+.cards {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  justify-content: space-between;
+  padding-top: 2rem;
+
+  &__item {
+    padding: 0.1rem;
+
+    & img {
+      max-height: 240px;
+    }
+  }
+}

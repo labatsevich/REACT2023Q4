@@ -9,14 +9,12 @@ export interface AppState {
   idDetailsLoading: boolean;
 }
 
-const search = new URLSearchParams(window.location.search);
-const _limit = search.has('limit') ? search.get('limit') : null;
-const _currentPage = search.has('page') ? search.get('page') : null;
+
 
 export const initialState: AppState = {
-  term: localStorage.getItem('searchTerm') ?? '',
-  limit: _limit ? +_limit : 25,
-  currentPage: _currentPage ? +_currentPage : 1,
+  term: '',
+  limit: 25,
+  currentPage: 1,
   isLoading: false,
   idDetailsLoading: false,
 };

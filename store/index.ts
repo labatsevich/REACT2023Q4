@@ -5,16 +5,16 @@ import {
   } from '@reduxjs/toolkit';
   import appReducer from './reducers/appSlice';
   import { animeApi } from './services/animeApi';
+import { createWrapper } from 'next-redux-wrapper';
   
   const rootReducer = combineReducers({
     app: appReducer,
     [animeApi.reducerPath]: animeApi.reducer,
   });
   
-  export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+  export const setupStore = () => {
     return configureStore({
       reducer: rootReducer,
-      preloadedState,
       middleware(getDefaultMiddleware) {
         return getDefaultMiddleware({ immutableCheck: true }).concat(
           animeApi.middleware
@@ -27,3 +27,5 @@ import {
   export type RootState = ReturnType<typeof rootReducer>;
   export type AppStore = ReturnType<typeof setupStore>;
   export type AppDispatch = AppStore['dispatch'];
+
+  export const wrapper = createWrapper<AppStore>(setupStore);

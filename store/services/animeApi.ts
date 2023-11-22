@@ -26,3 +26,4 @@ export const animeApi = createApi({
 });
 
 export const { useAnimeListQuery, useGetDetailsQuery } = animeApi;
+export const { animeList, getDetails } = animeApi.endpoints;

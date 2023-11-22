@@ -1,7 +1,16 @@
-import { FC } from "react"
+import { IAnime } from "@/types"
+import Card from "../Card";
+import styles from '../../styles/pane.module.scss'
 
-export const Pane:FC = () => {
+interface IPaneProps {
+    data: IAnime[];
+}
 
-    return(<div></div>)
+const Pane = ({data}:IPaneProps) => {
+    return(<div className={styles.cards}>
+        {data.map((item) => <Card key = {item.mal_id} item={item}/>)}
+    </div>)
 
 }
+
+export default Pane;
