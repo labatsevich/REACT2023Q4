@@ -102,6 +102,27 @@ a {
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
+  height: 100%;
+  padding-top: 1rem;
+}
+
+.picker {
+  display: flex;
+  justify-content: center;
+  padding: 0  0 1rem;
+}
+
+select {
+  border: none;
+  padding: 0.5rem;
+  outline: 1px solid #d5d5d5;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: #777;
+  width: fit-content;
+  &:focus {
+    outline: cornflowerblue 1px solid;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
