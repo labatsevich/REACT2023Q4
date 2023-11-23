@@ -1,5 +1,4 @@
 import { IAnime } from "@/types";
-import Link from "next/link";
 import Image from "next/image";
 import styles from '@/styles/pane.module.scss';
 import { useRouter } from "next/router";

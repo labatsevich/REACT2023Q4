@@ -1,3 +1,4 @@
+import Details from '@/components/Details'
 import { LimitPicker } from '@/components/LimitPicker'
 import Pagination from '@/components/Pagination'
 import Pane from '@/components/Pane'
@@ -46,7 +47,7 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
         <LimitPicker />
         {pagination && <Pagination hasNext={pagination.has_next_page} current={pagination.current_page ?? 1} total={pagination.last_visible_page} />}
         <Pane data={data.anime.data} />
-        {details && details.title}
+        {details && <Details {...details} /> }
 
     </>
 
