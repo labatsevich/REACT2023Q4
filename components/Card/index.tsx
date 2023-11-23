@@ -14,16 +14,14 @@ const Card =  ({item}: ICardProps) => {
   const {query, pathname} = router;
 
   const showDetails = (id: number) => {
-    router.push({pathname, query:{...query, id }})
+    router.push({query:{...query, id }})
   }
 
   return (
-    <Link href={router.query} onClick={ () => showDetails(item.mal_id)}>
-      <div className={styles.cards__item} key={item.mal_id}>
+      <div className={styles.cards__item} key={item.mal_id} onClick={ () => showDetails(item.mal_id)}>
         <Image src={item.images.jpg.image_url} width={200} height={240} alt={item.title}/> 
         <p>{item.title}</p>
       </div>
-    </Link>
   );
 };
 
