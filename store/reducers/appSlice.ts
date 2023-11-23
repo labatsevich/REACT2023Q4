@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { animeApi } from '../services/animeApi';
+import { IAnime } from '@/types';
 
 export interface AppState {
   term: string;
@@ -7,6 +8,7 @@ export interface AppState {
   currentPage: number;
   isLoading: boolean;
   idDetailsLoading: boolean;
+  details: IAnime | null ;
 }
 
 
@@ -17,6 +19,7 @@ export const initialState: AppState = {
   currentPage: 1,
   isLoading: false,
   idDetailsLoading: false,
+  details: null,
 };
 
 const appSlice = createSlice({
@@ -52,8 +55,9 @@ const appSlice = createSlice({
       ),
       builder.addMatcher(
         animeApi.endpoints.getDetails.matchFulfilled,
-        (state) => {
+        (state, action) => {
           state.idDetailsLoading = false;
+          state.details = action.payload;
         }
       );
   },
