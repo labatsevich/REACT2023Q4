@@ -12,7 +12,8 @@ export const Searchbar: FC = () => {
     e: FormEvent<HTMLFormElement | HTMLButtonElement>
   ): void => {
     e.preventDefault();
-    router.push({query: {q:search, limit:query.limit || 25,  page: query.page || 1}});
+    delete query.id;
+    router.push({query: {q:search, limit:query.limit || 25,  page: 1}});
   };
 
   useEffect(() => {

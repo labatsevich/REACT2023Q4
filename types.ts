@@ -1,3 +1,5 @@
+import { type } from "os";
+
 type Items = {
     count: number;
     total: number;
@@ -33,4 +35,9 @@ type Items = {
   export interface IAnimeResponse {
     data: IAnime[];
     pagination: PaginationType;
+  }
+
+  export type MixedAnimeResponse = {
+    anime: IAnimeResponse,
+    details: IAnime | null 
   }
