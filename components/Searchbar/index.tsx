@@ -16,10 +16,6 @@ export const Searchbar: FC = () => {
     router.push({query: {q:search, limit:query.limit || 25,  page: 1}});
   };
 
-  useEffect(() => {
-    localStorage.setItem('searchTerm', search);
-  }, [router]);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
     setSearch(value);

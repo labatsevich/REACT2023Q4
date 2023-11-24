@@ -4,9 +4,11 @@ import Pagination from '@/components/Pagination'
 import Pane from '@/components/Pane'
 import { wrapper } from '@/store'
 import { animeList, getDetails, getRunningQueriesThunk } from '@/store/services/animeApi'
-import { IAnimeResponse, MixedAnimeResponse } from '@/types'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import Head from 'next/head'
+import { IAnimeResponse, MixedAnimeResponse } from '@/types';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
+import styles from '@/styles/pane.module.scss';
+
 export const getServerSideProps: GetServerSideProps<{ data: MixedAnimeResponse }> = wrapper.getServerSideProps((store) => async (context) => {
 
   const { q, limit, page, id } = context.query;
@@ -44,11 +46,13 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <LimitPicker />
+      <LimitPicker />
+      <section className={styles.characters}>
         {pagination && <Pagination hasNext={pagination.has_next_page} current={pagination.current_page ?? 1} total={pagination.last_visible_page} />}
-        <Pane data={data.anime.data} />
-        {details && <Details {...details} /> }
-
+        <Pane data={data.anime.data} >
+          {details && <Details {...details} />}
+        </Pane>
+      </section>
     </>
 
   )

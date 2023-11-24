@@ -8,10 +8,10 @@ export const LimitPicker = () => {
     const _limit = query.limit || 25;
 
     const onLimitChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    
-        delete query.q;
-        delete query.id;
-        router.push({query : {...query, limit: e.target.value, page: 1}});
+
+      if(!query.q) delete query.q;
+      delete query.id;
+       router.push({query : {...query, limit: e.target.value, page: 1}});
         
     };
   

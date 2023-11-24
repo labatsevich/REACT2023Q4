@@ -1,8 +1,6 @@
 .characters {
-  display: grid;
-  grid-template-columns: 4fr auto;
+  display: block;
   position: relative;
-  padding-top: 2rem;
   min-height: 100vh;
   height: 100%;
 }
@@ -19,5 +17,41 @@
     & img {
       max-height: 240px;
     }
+  }
+}
+
+.details {
+  display: flex;
+  position: absolute;
+  right: 0;
+  flex-direction: column;
+  min-width: 320px;
+  max-width: 320px;
+  transition: all 0.5s ease-in;
+  padding: 1rem 1rem 0;
+  z-index: 100;
+  align-items: center;
+  background-color: #fff;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.6;
+  }
+
+  &.show {
+    min-width: 320px;
+  }
+
+  & .close {
+    position: absolute;
+    right: -25px;
+    top: -5px;
+    font-weight: bold;
+    cursor: pointer;
   }
 }
