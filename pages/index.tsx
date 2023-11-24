@@ -49,9 +49,8 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
       <LimitPicker />
       <section className={styles.characters}>
         {pagination && <Pagination hasNext={pagination.has_next_page} current={pagination.current_page ?? 1} total={pagination.last_visible_page} />}
-        <Pane data={data.anime.data} >
-          {details && <Details {...details} />}
-        </Pane>
+        <Pane data={data.anime.data} />
+        {details && <Details {...details} />}
       </section>
     </>
 

@@ -20,7 +20,7 @@ const Details = (data:IAnime) => {
           <span className={styles.close} onClick={close} title="close">
             &times;
           </span>
-          <Image src={data.images.webp.image_url} width={200} height={320} alt={data.title} objectFit="fill"/> 
+          <Image src={data.images.webp.image_url} width={320} height={400} alt={data.title} objectFit="fill"/> 
           <span>{data.title}</span>
           <span>{data.genre}</span>
           <span>{data.year}</span>

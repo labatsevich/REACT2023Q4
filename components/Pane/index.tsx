@@ -5,13 +5,11 @@ import { ReactNode } from "react";
 
 interface IPaneProps {
     data: IAnime[];
-    children: ReactNode;
 }
 
-const Pane = ({data, children}:IPaneProps) => {
+const Pane = ({data}:IPaneProps) => {
     return(<div className={styles.cards}>
         {data.map((item) => <Card key = {item.mal_id} item={item}/>)}
-        {children}
     </div>)
 
 }
