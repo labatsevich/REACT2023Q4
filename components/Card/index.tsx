@@ -1,4 +1,3 @@
-import React from "react";
 import { IAnime } from "@/types";
 import Image from "next/image";
 import styles from '@/styles/pane.module.scss';

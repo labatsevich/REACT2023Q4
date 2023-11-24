@@ -1,30 +1,25 @@
-import { ChangeEvent, FormEvent, useEffect, FC, useState } from 'react';
+import { useRef } from 'react';
 import styles from '../../styles/searchbar.module.scss';
 import { useRouter } from 'next/router';
 
-export const Searchbar: FC = () => {
+export const Searchbar = () => {
 
   const router = useRouter();
   const { query } = router;
-  const [search, setSearch] = useState<string>((query.q ?? '').toString());
+  const inputRef = useRef<HTMLInputElement>(null);
+  
 
-  const handleSubmit = (
-    e: FormEvent<HTMLFormElement | HTMLButtonElement>
-  ): void => {
-    e.preventDefault();
+  const handleSubmit = (): void => {
+    const search = inputRef.current?.value.trim() ?? '';
     delete query.id;
-    router.push({query: {q:search, limit:query.limit || 25,  page: 1}});
+    router.push({query: {q:search, limit:query.limit ?? 25,  page: 1}});
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { value } = e.target;
-    setSearch(value);
-  };
 
   return (
     <form method="GET" onSubmit={handleSubmit}>
       <div className={styles.search}>
-        <input type="search" value={search} onChange={handleChange} name="q" className={styles.search__input} />
+        <input type="search"  ref={inputRef} defaultValue={query.q} name="q" className={styles.search__input} />
         <button type="submit" className={styles.search__button}>Search</button>
       </div>
     </form>

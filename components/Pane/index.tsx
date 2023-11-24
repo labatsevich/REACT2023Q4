@@ -1,7 +1,6 @@
 import { IAnime } from "@/types"
 import Card from "../Card";
 import styles from '../../styles/pane.module.scss'
-import { ReactNode } from "react";
 
 interface IPaneProps {
     data: IAnime[];
