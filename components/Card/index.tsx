@@ -18,7 +18,7 @@ const Card =  ({item}: ICardProps) => {
 
   return (
       <div className={styles.cards__item} key={item.mal_id} onClick={ () => showDetails(item.mal_id)}>
-        <Image src={item.images.jpg.image_url} width={200} height={240} alt={item.title}/> 
+        <Image src={item.images.jpg.image_url} width={200} height={240} alt={item.title} objectFit="cover"/> 
         <p className={styles.cards__item_title}>{item.title}</p>
         <p className={styles.cards__item_year}>{item.year}</p>
       </div>
