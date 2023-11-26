@@ -25,5 +25,5 @@ export const animeApi = createApi({
   }),
 });
 
-export const { useAnimeListQuery, useGetDetailsQuery, util: { getRunningQueriesThunk },} = animeApi;
+export const { useAnimeListQuery, useGetDetailsQuery, util: { getRunningQueriesThunk }} = animeApi;
 export const { animeList, getDetails } = animeApi.endpoints;
