@@ -13,7 +13,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       reportsDirectory: './tests/unit/coverage',
       include: ['**/*.tsx'],
-      exclude: ['**/node_modules/**','**/dist/**'],
+      exclude: ['**/node_modules/**','**/dist/**', '**/pages/**'],
     },
   },
   resolve: {
