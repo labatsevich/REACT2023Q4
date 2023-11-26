@@ -1,11 +1,10 @@
-# Ignore artifacts
-
+# Ignore artifacts:
 build
 coverage
 
-# Ignore all HTML files
-
+# Ignore all HTML files:
 **/*.html
+
 
 **/.git
 **/.svn
