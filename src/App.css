@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+.uc-form{
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 320px;
+  width: 100%;
+}
+
+.control-label{
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
