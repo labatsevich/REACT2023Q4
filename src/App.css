@@ -51,5 +51,19 @@
 .control-label{
   display: flex;
   flex-flow: column nowrap;
-  width: 100%;
+  width: 320px
+}
+
+.control-label input:not(input[type=checkbox]),
+.control-label select {
+  border-radius: 4px;
+  width: inherit;
+  padding: .5rem;
+  border:none;
+  outline: 1px solid #dbdada;
+}
+
+.control-label.error  input {
+  border: none;
+  outline: crimson 1px solid;
 }

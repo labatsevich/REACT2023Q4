@@ -10,10 +10,13 @@ type PropsType = {
 
 const UCInput: FC<PropsType> = ({ label, name, type, inputRef, error }) => {
   return (
-    <label htmlFor={name.toLocaleLowerCase()} className="control-label">
+    <label
+      htmlFor={name.toLocaleLowerCase()}
+      className={!error ? 'control-label' : 'control-label error'}
+    >
       {label}
       <input type={type} name={name.toLocaleLowerCase()} ref={inputRef} />
-      {error && <span className="control-error">{error}</span>}
+      {error && <span className="message-error">{error}</span>}
     </label>
   );
 };
