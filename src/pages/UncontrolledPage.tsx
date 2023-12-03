@@ -78,6 +78,7 @@ const UncontrolledPage: FC = () => {
       const profile = { ...response, avatar: encoded };
 
       dispatch(insertAccount(profile));
+      formRef.current?.reset();
       navigate('/', { state: { from: 'uncontrolled' } });
     } catch (err) {
       if (err instanceof ValidationError) {
