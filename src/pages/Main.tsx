@@ -4,6 +4,8 @@ import { useAppSelector } from '../hooks';
 const Main: FC = () => {
   const { items } = useAppSelector((state) => state.app);
 
+  if (items.length === 0) return <div>Still no data</div>;
+
   return (
     <section className="profiles">
       {items &&
@@ -23,12 +25,20 @@ const Main: FC = () => {
               {item.email}
             </p>
             <p>
+              <b>Password:</b>
+              {item.password}
+            </p>
+            <p>
               <b>Gender:</b>
               {item.gender}
             </p>
             <p>
               <b>Country:</b>
               {item.country}
+            </p>
+            <p>
+              <b>T & C:</b>
+              {item.tc ? true : false}
             </p>
           </div>
         ))}
