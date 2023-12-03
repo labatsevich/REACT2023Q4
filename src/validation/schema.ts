@@ -41,7 +41,7 @@ const schemaObject = yup.object().shape({
   avatar: yup
     .mixed<File>()
     .test(
-      'fileSize',
+      'image size',
       'Only images up to 2MB are permitted.',
       (file) =>
         !file || // Check if `file` is defined
