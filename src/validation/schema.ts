@@ -29,6 +29,30 @@ const schemaObject = yup.object().shape({
       /[^A-ZА-Яa-zа-я0-9Ёё\s]/,
       'must have at least one special character (@#$%^&* etc.)'
     ),
+  confirm: yup
+    .string()
+    .label('confirm password')
+    .required('you must confirm password')
+    .oneOf([yup.ref('password')], 'must match the password'),
+  tc: yup
+    .boolean()
+    .required('T & c not accepted')
+    .oneOf([true], 'Must Accept Terms and Conditions'),
+  avatar: yup
+    .mixed<File>()
+    .test(
+      'fileSize',
+      'Only images up to 2MB are permitted.',
+      (file) =>
+        !file || // Check if `file` is defined
+        file.size <= 2_000_000
+    )
+    .test('image extension', (file) => {
+      const allowedTypes = ['image/jpeg', 'image/png'];
+      return file && allowedTypes.includes(file.type);
+    }),
+  gender: yup.string().required(),
+  country: yup.string().required(),
 });
 
 export default schemaObject;
